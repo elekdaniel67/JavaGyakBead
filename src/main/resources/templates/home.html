@@ -1,15 +1,41 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring
-security">
-<head>
-    <meta charset="UTF-8">
-    <title>Home</title>
-</head>
+<html lang="hu" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      th:replace="~{layout :: layout('Főoldal - Szoftverleltár', ~{::section})}">
 <body>
-<div th:replace="~{menu :: menu}"></div>
-<hr>
-<h1>Home page</h1>
-<div sec:authorize="isAuthenticated()">
-    <p>Logged in user:<strong sec:authentication="name"></strong></p>
-</div>
+<section id="hero" class="text-center">
+    <div class="aur aur-a" style="top: 10%; left: 10%;"></div>
+    <div class="aur aur-b" style="bottom: 10%; right: 10%;"></div>
+
+    <div class="container position-relative" style="z-index: 1;">
+        <div class="hbadge afu">
+            <span class="bdot"></span>
+            <span>Java &amp; Spring Boot Webalkalmazás</span>
+        </div>
+
+        <h1 class="h1 afu">
+            Szoftverleltár és<br>
+            <span class="gt">Licenc Nyilvántartás</span>
+        </h1>
+
+        <p class="ssub mx-auto mb-5 afu">
+            Vállalati szoftverek, kategóriák és munkaállomás-telepítések átlátható kezelése,
+            statisztikai elemzése és valós idejű nyilvántartása egyetlen modern felületen.
+        </p>
+
+        <div class="d-flex flex-wrap justify-content-center gap-3 afu" sec:authorize="isAnonymous()">
+            <a th:href="@{/login}" class="bgrd px-4 py-3">
+                Bejelentkezés <i class="bi bi-arrow-right ms-1"></i>
+            </a>
+            <a th:href="@{/register}" class="boc px-4 py-3">
+                <i class="bi bi-person-plus me-1"></i> Regisztráció
+            </a>
+        </div>
+
+        <div sec:authorize="isAuthenticated()" class="gc d-inline-block px-4 py-3 mt-2 afu">
+            <span style="color: var(--tx2);">Sikeresen bejelentkezve mint:</span>
+            <strong class="gt ms-1" sec:authentication="name"></strong>
+        </div>
+    </div>
+</section>
 </body>
+</html>

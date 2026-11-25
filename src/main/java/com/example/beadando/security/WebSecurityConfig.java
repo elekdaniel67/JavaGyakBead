@@ -52,9 +52,23 @@ public class WebSecurityConfig {
         http
                 .authenticationProvider(authenticationProvider())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/register", "/login", "/css/**", "/js/**").permitAll()
-                        .requestMatchers("/user").hasAnyRole("USER", "ADMIN")
-                        .requestMatchers("/admin").hasRole("ADMIN")
+                        .requestMatchers(
+                                "/",
+                                "/register",
+                                "/login",
+                                "/adatbazis",
+                                "/kapcsolat",
+                                "/diagram",
+                                "/rest",
+                                "/api/**",
+                                "/css/**",
+                                "/js/**",
+                                "/img/**",
+                                "/assets/**",
+                                "/webfonts/**"
+                        ).permitAll()
+                        .requestMatchers("/user", "/uzenetek").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers("/admin", "/crud/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
@@ -69,11 +83,11 @@ public class WebSecurityConfig {
                 .exceptionHandling(exception -> exception
                         .defaultAuthenticationEntryPointFor(
                                 (request, response, authException) -> response.sendRedirect("/login"),
-                                request -> request.getRequestURI().equals("/user")
+                                request -> request.getRequestURI().equals("/user") || request.getRequestURI().equals("/uzenetek")
                         )
                         .defaultAuthenticationEntryPointFor(
                                 (request, response, authException) -> response.sendRedirect("/"),
-                                request -> request.getRequestURI().equals("/admin")
+                                request -> request.getRequestURI().equals("/admin") || request.getRequestURI().startsWith("/crud")
                         )
                         .accessDeniedHandler(
                                 (request, response, accessDeniedException) -> response.sendRedirect("/")

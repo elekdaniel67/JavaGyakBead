@@ -1,18 +1,36 @@
-
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring/security">
+<html lang="hu" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      th:replace="~{layout :: layout('Főoldal - Szoftverleltár', ~{::section})}">
 <body>
-<nav th:fragment="menu">
-    <a th:href="@{/}">Home</a>
-    <span sec:authorize="isAuthenticated()"> | <a th:href="@{/user}">User</a></span>
-    <span sec:authorize="hasRole('ADMIN')"> | <a th:href="@{/admin}">Admin</a></span>
-    <span sec:authorize="isAnonymous()"> | <a th:href="@{/register}">Register</a>|<a
-            th:href="@{/login}">Login</a></span>
-    <span sec:authorize="isAuthenticated()"> |
-<form th:action="@{/logout}" method="post" style="display: inline">
-<button type="submit">Logout</button>
-</form>
-</span>
-</nav>
+<section class="container flex-grow-1 d-flex flex-column justify-content-center align-items-center text-center py-5">
+    <div class="hero-badge mb-4">
+        <span class="hero-badge-dot"></span>
+        <span>Java &amp; Spring Boot Webalkalmazás</span>
+    </div>
+
+    <h1 class="hero-title mb-4">
+        Szoftverleltár és<br>
+        <span class="text-gradient">Licenc Nyilvántartás</span>
+    </h1>
+
+    <p class="hero-subtitle mb-5">
+        Vállalati szoftverek, kategóriák és munkaállomás-telepítések átlátható kezelése,
+        statisztikai elemzése és valós idejű nyilvántartása egyetlen modern felületen.
+    </p>
+
+    <div class="d-flex flex-wrap justify-content-center gap-3" sec:authorize="isAnonymous()">
+        <a th:href="@{/login}" class="btn btn-gradient">
+            Bejelentkezés <i class="bi bi-arrow-right ms-1"></i>
+        </a>
+        <a th:href="@{/register}" class="btn btn-dark-outline">
+            <i class="bi bi-person-plus me-1"></i> Regisztráció
+        </a>
+    </div>
+
+    <div sec:authorize="isAuthenticated()" class="glass-card px-4 py-3 mt-2">
+        <span class="text-secondary">Sikeresen bejelentkezve mint:</span>
+        <strong class="text-white ms-1" sec:authentication="name"></strong>
+    </div>
+</section>
 </body>
 </html>

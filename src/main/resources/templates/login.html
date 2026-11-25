@@ -1,19 +1,38 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-</head>
+<html lang="hu" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout('Bejelentkezés - Szoftverleltár', ~{::section})}">
 <body>
-<div th:replace="~{menu :: menu}"></div>
-<hr>
-<h1>Login</h1>
-<div th:if="${param.registered}" style="color: green;">Successful registration! You can log in.</div>
-<div th:if="${param.error}" style="color: red;">Incorrect username or password!</div>
-<form th:action="@{/login}" method="post">
-    <label>Username:</label><input type="text" name="username"><br>
-    <label>Password:</label><input type="password" name="password"><br>
-    <button type="submit">Login</button>
-</form>
+<section class="position-relative flex-grow-1 d-flex align-items-center justify-content-center py-5" style="overflow: hidden;">
+    <div class="aur aur-a" style="top: 5%; left: 15%;"></div>
+    <div class="aur aur-b" style="bottom: 5%; right: 15%;"></div>
+
+    <div class="container position-relative" style="z-index: 1;">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-4">
+                <div class="gc p-4 p-md-5 afu">
+                    <h2 class="fw-bold text-center text-white mb-2">Bejelentkezés</h2>
+                    <p class="text-center small mb-4" style="color: var(--tx2);">Lépj be a Szoftverleltár felületére</p>
+
+                    <div th:if="${param.registered}" class="alert alert-success py-2 small">
+                        Sikeres regisztráció! Most már bejelentkezhetsz.
+                    </div>
+                    <div th:if="${param.error}" class="err-msg d-block">
+                        Hibás felhasználónév vagy jelszó!
+                    </div>
+
+                    <form th:action="@{/login}" method="post">
+                        <label class="olbl">Felhasználónév</label>
+                        <input type="text" name="username" class="oinp" required>
+
+                        <label class="olbl">Jelszó</label>
+                        <input type="password" name="password" class="oinp" required>
+
+                        <button type="submit" class="bgrd w-100 py-2 mt-2">Belépés</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 </body>
 </html>

@@ -1,15 +1,17 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring
-security">
-<head>
-    <meta charset="UTF-8">
-    <title>Admin</title>
-</head>
+<html lang="hu" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      th:replace="~{layout :: layout('Admin oldal - Szoftverleltár', ~{::section})}">
 <body>
-<div th:replace="~{menu :: menu}"></div>
-<hr>
-<h1>Admin page</h1>
-<p>This page can only be seen by ADMIN.</p>
-<p>Admin:<strong sec:authentication="name"></strong></p>
+<section class="position-relative flex-grow-1 py-5" style="overflow: hidden;">
+    <div class="aur aur-b" style="top: -10%; right: 10%;"></div>
+    <div class="container position-relative pt-4" style="z-index: 1;">
+        <div class="gc p-4 p-md-5 afu" style="border-color: rgba(139, 92, 246, 0.35);">
+            <div class="hbadge"><span class="bdot"></span> Adminisztrátori jogosultság</div>
+            <h1 class="stitle text-white">Admin page</h1>
+            <p class="ssub mb-3">Ezt az oldalt kizárólag ADMIN jogosultsággal lehet megtekinteni.</p>
+            <p class="mb-0" style="color: var(--tx2);">Admin felhasználó: <strong class="gt" sec:authentication="name"></strong></p>
+        </div>
+    </div>
+</section>
 </body>
 </html>

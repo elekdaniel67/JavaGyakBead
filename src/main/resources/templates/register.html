@@ -1,18 +1,33 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Registration</title>
-</head>
+<html lang="hu" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout('Regisztráció - Szoftverleltár', ~{::section})}">
 <body>
-<div th:replace="~{menu :: menu}"></div>
-<hr>
-<h1>Registration</h1>
-<p th:if="${error}" th:text="${error}" style="color: red"></p>
-<form th:action="@{/register}" method="post">
-    <label>Username:</label><input type="text" name="username" required><br>
-    <label>Password:</label><input type="password" name="password" required><br>
-    <button type="submit">Register</button>
-</form>
+<section class="position-relative flex-grow-1 d-flex align-items-center justify-content-center py-5" style="overflow: hidden;">
+    <div class="aur aur-a" style="top: 5%; left: 15%;"></div>
+    <div class="aur aur-b" style="bottom: 5%; right: 15%;"></div>
+
+    <div class="container position-relative" style="z-index: 1;">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-4">
+                <div class="gc p-4 p-md-5 afu">
+                    <h2 class="fw-bold text-center text-white mb-2">Regisztráció</h2>
+                    <p class="text-center small mb-4" style="color: var(--tx2);">Új felhasználói fiók létrehozása</p>
+
+                    <div th:if="${error}" th:text="${error}" class="err-msg d-block"></div>
+
+                    <form th:action="@{/register}" method="post">
+                        <label class="olbl">Felhasználónév</label>
+                        <input type="text" name="username" class="oinp" required>
+
+                        <label class="olbl">Jelszó</label>
+                        <input type="password" name="password" class="oinp" required>
+
+                        <button type="submit" class="bgrd w-100 py-2 mt-2">Fiók létrehozása</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 </body>
 </html>
