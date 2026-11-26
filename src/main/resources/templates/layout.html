@@ -21,18 +21,25 @@
 
         <div class="d-none d-lg-flex align-items-center gap-1">
             <a class="nav-link" th:href="@{/}">Főoldal</a>
-            <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/user}">User</a>
+            <a class="nav-link" th:href="@{/adatbazis}">Adatbázis</a>
+            <a class="nav-link" th:href="@{/kapcsolat}">Kapcsolat</a>
+            <a class="nav-link" th:href="@{/diagram}">Diagram</a>
+            <a class="nav-link" th:href="@{/rest}">REST</a>
+
+            <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/uzenetek}">Üzenetek</a>
+            <a class="nav-link" sec:authorize="hasAnyAuthority('ROLE_ADMIN', 'ADMIN')" th:href="@{/crud}">CRUD</a>
             <a class="nav-link" sec:authorize="hasAnyAuthority('ROLE_ADMIN', 'ADMIN')" th:href="@{/admin}">Admin</a>
         </div>
 
         <div class="d-none d-lg-flex align-items-center gap-2">
-            <a class="nav-link" sec:authorize="isAnonymous()" th:href="@{/register}">Register</a>
+            <a class="nav-link" sec:authorize="isAnonymous()" th:href="@{/register}">Regisztráció</a>
             <a class="boc px-3 py-2 text-decoration-none" sec:authorize="isAnonymous()" th:href="@{/login}">
                 <i class="bi bi-box-arrow-in-right me-1"></i> Login
             </a>
 
             <span sec:authorize="isAuthenticated()" style="color: var(--tx2); font-size: 0.85rem;" class="me-2">
-                Bejelentkezve: <strong class="text-white" sec:authentication="name"></strong>
+                <i class="bi bi-person-circle me-1"></i>
+                <strong class="text-white" sec:authentication="name"></strong>
             </span>
             <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post" class="d-inline">
                 <button type="submit" class="boc px-3 py-1">Logout</button>
@@ -49,10 +56,15 @@
 <div id="mbmenu" class="d-lg-none">
     <div class="d-flex flex-column gap-2">
         <a class="nav-link" th:href="@{/}">Főoldal</a>
-        <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/user}">User</a>
+        <a class="nav-link" th:href="@{/adatbazis}">Adatbázis</a>
+        <a class="nav-link" th:href="@{/kapcsolat}">Kapcsolat</a>
+        <a class="nav-link" th:href="@{/diagram}">Diagram</a>
+        <a class="nav-link" th:href="@{/rest}">REST</a>
+        <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/uzenetek}">Üzenetek</a>
+        <a class="nav-link" sec:authorize="hasAnyAuthority('ROLE_ADMIN', 'ADMIN')" th:href="@{/crud}">CRUD</a>
         <a class="nav-link" sec:authorize="hasAnyAuthority('ROLE_ADMIN', 'ADMIN')" th:href="@{/admin}">Admin</a>
         <hr style="border-color: var(--bd);">
-        <a class="nav-link" sec:authorize="isAnonymous()" th:href="@{/register}">Register</a>
+        <a class="nav-link" sec:authorize="isAnonymous()" th:href="@{/register}">Regisztráció</a>
         <a class="bgrd text-center py-2" sec:authorize="isAnonymous()" th:href="@{/login}">Login</a>
         <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
             <button type="submit" class="boc w-100 py-2">Logout (<span sec:authentication="name"></span>)</button>

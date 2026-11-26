@@ -37,7 +37,7 @@ public class WebSecurityConfig {
             boolean isAdmin = authentication
                     .getAuthorities()
                     .stream()
-                    .anyMatch(authority -> authority.getAuthority().equals("ROLE_ADMIN"));
+                    .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN") || a.getAuthority().equals("ADMIN"));
 
             if (isAdmin) {
                 response.sendRedirect("/admin");
@@ -67,8 +67,8 @@ public class WebSecurityConfig {
                                 "/assets/**",
                                 "/webfonts/**"
                         ).permitAll()
-                        .requestMatchers("/user", "/uzenetek").hasAnyRole("USER", "ADMIN")
-                        .requestMatchers("/admin", "/crud/**").hasRole("ADMIN")
+                        .requestMatchers("/user", "/uzenetek/**").hasAnyAuthority("ROLE_USER", "USER", "ROLE_ADMIN", "ADMIN")
+                        .requestMatchers("/admin", "/crud/**").hasAnyAuthority("ROLE_ADMIN", "ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
@@ -83,7 +83,7 @@ public class WebSecurityConfig {
                 .exceptionHandling(exception -> exception
                         .defaultAuthenticationEntryPointFor(
                                 (request, response, authException) -> response.sendRedirect("/login"),
-                                request -> request.getRequestURI().equals("/user") || request.getRequestURI().equals("/uzenetek")
+                                request -> request.getRequestURI().equals("/user") || request.getRequestURI().startsWith("/uzenetek")
                         )
                         .defaultAuthenticationEntryPointFor(
                                 (request, response, authException) -> response.sendRedirect("/"),
