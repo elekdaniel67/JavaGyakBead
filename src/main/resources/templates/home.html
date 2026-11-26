@@ -1,41 +1,272 @@
 <!DOCTYPE html>
 <html lang="hu" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      th:replace="~{layout :: layout('Főoldal - Szoftverleltár', ~{::section})}">
+      th:replace="~{layout :: layout('Főoldal - Szoftverleltár', ~{::div#home-content})}">
 <body>
-<section id="hero" class="text-center">
-    <div class="aur aur-a" style="top: 10%; left: 10%;"></div>
-    <div class="aur aur-b" style="bottom: 10%; right: 10%;"></div>
+<div id="home-content">
 
-    <div class="container position-relative" style="z-index: 1;">
-        <div class="hbadge afu">
-            <span class="bdot"></span>
-            <span>Java &amp; Spring Boot Webalkalmazás</span>
+    <!-- 1. HERO SZEKCIÓ -->
+    <section id="hero" class="text-center">
+        <div class="aur aur-a" style="top: 8%; left: 8%;"></div>
+        <div class="aur aur-b" style="bottom: 12%; right: 8%;"></div>
+
+        <div class="container position-relative py-5" style="z-index: 1;">
+            <div class="hbadge afu">
+                <span class="bdot"></span>
+                <span>Vállalati IT Eszköz- és Licencmenedzsment</span>
+            </div>
+
+            <h1 class="h1 afu">
+                Szoftverleltár és<br>
+                <span class="gt">Licenc Nyilvántartás</span>
+            </h1>
+
+            <p class="ssub mx-auto mb-5 afu">
+                Átlátható nyilvántartás vállalati szoftverekről, kategóriákról és munkaállomás-telepítésekről.
+                Valós idejű statisztikák, RESTful API és szerepkör-alapú jogosultságkezelés egyetlen modern felületen.
+            </p>
+
+            <!-- Gombok látogatóknak -->
+            <div class="d-flex flex-wrap justify-content-center gap-3 mb-5 afu" sec:authorize="isAnonymous()">
+                <a th:href="@{/adatbazis}" class="bgrd px-4 py-3">
+                    <i class="bi bi-database me-2"></i>Adatbázis megtekintése
+                </a>
+                <a th:href="@{/login}" class="boc px-4 py-3">
+                    <i class="bi bi-box-arrow-in-right me-2"></i>Bejelentkezés
+                </a>
+            </div>
+
+            <!-- Gombok bejelentkezett felhasználóknak -->
+            <div class="d-flex flex-wrap justify-content-center gap-3 mb-5 afu" sec:authorize="isAuthenticated()">
+                <a th:href="@{/adatbazis}" class="bgrd px-4 py-3">
+                    <i class="bi bi-database me-2"></i>Szoftverleltár böngészése
+                </a>
+                <a th:href="@{/diagram}" class="boc px-4 py-3">
+                    <i class="bi bi-bar-chart-line me-2"></i>Statisztikák megtekintése
+                </a>
+            </div>
+
+            <!-- Látványos rendszer-előnézeti ablak (Dashboard Mockup a style.css osztályaival) -->
+            <div class="dwrap text-start mx-auto mt-4 adi" style="max-width: 960px;">
+                <div class="dtbar">
+                    <span class="dd" style="background: #ef4444;"></span>
+                    <span class="dd" style="background: #f59e0b;"></span>
+                    <span class="dd" style="background: #10b981;"></span>
+                    <span class="ms-2 small" style="color: var(--tx3);">szoftverleltar.local — Központi Nyilvántartó Rendszer</span>
+                </div>
+                <div class="dgrid">
+                    <div class="dside">
+                        <div class="small fw-bold text-uppercase mb-3 px-2" style="color: var(--tx3); font-size: 0.68rem;">Modulok</div>
+                        <a th:href="@{/adatbazis}" class="dsi on"><i class="bi bi-hdd-stack"></i> Szoftverek</a>
+                        <a th:href="@{/adatbazis}" class="dsi"><i class="bi bi-tags"></i> Kategóriák</a>
+                        <a th:href="@{/adatbazis}" class="dsi"><i class="bi bi-pc-display"></i> Telepítések</a>
+                        <a th:href="@{/diagram}" class="dsi"><i class="bi bi-pie-chart"></i> Diagramok</a>
+                        <a th:href="@{/rest}" class="dsi"><i class="bi bi-braces"></i> REST API</a>
+                    </div>
+                    <div class="p-4">
+                        <div class="row g-3 mb-4">
+                            <div class="col-6 col-md-3">
+                                <div class="stpill">
+                                    <div class="small" style="color: var(--tx3);">Nyilvántartott szoftver</div>
+                                    <div class="fs-4 fw-bold text-white mt-1">3 tábla</div>
+                                    <div class="small text-success">Relációs MySQL</div>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <div class="stpill">
+                                    <div class="small" style="color: var(--tx3);">Adatvizualizáció</div>
+                                    <div class="fs-4 fw-bold text-white mt-1">Chart.js</div>
+                                    <div class="small" style="color: #a78bfa;">Élő kimutatás</div>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <div class="stpill">
+                                    <div class="small" style="color: var(--tx3);">Interfész</div>
+                                    <div class="fs-4 fw-bold text-white mt-1">RESTful</div>
+                                    <div class="small text-info">JSON API</div>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <div class="stpill">
+                                    <div class="small" style="color: var(--tx3);">Biztonság</div>
+                                    <div class="fs-4 fw-bold text-white mt-1">3 szint</div>
+                                    <div class="small text-warning">Spring Security</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-3 rounded-3" style="background: var(--bg3); border: 1px solid var(--bd);">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="small fw-semibold text-white">Kategóriánkénti szoftver- és telepítésmegoszlás</span>
+                                <span class="bst son">Rendszer aktív</span>
+                            </div>
+                            <div class="d-flex align-items-end gap-2" style="height: 85px;">
+                                <div class="bbar" style="height: 45%;"></div>
+                                <div class="bbar" style="height: 75%;"></div>
+                                <div class="bbar" style="height: 60%;"></div>
+                                <div class="bbar" style="height: 95%;"></div>
+                                <div class="bbar" style="height: 55%;"></div>
+                                <div class="bbar" style="height: 82%;"></div>
+                                <div class="bbar" style="height: 68%;"></div>
+                                <div class="bbar" style="height: 90%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <h1 class="h1 afu">
-            Szoftverleltár és<br>
-            <span class="gt">Licenc Nyilvántartás</span>
-        </h1>
-
-        <p class="ssub mx-auto mb-5 afu">
-            Vállalati szoftverek, kategóriák és munkaállomás-telepítések átlátható kezelése,
-            statisztikai elemzése és valós idejű nyilvántartása egyetlen modern felületen.
-        </p>
-
-        <div class="d-flex flex-wrap justify-content-center gap-3 afu" sec:authorize="isAnonymous()">
-            <a th:href="@{/login}" class="bgrd px-4 py-3">
-                Bejelentkezés <i class="bi bi-arrow-right ms-1"></i>
-            </a>
-            <a th:href="@{/register}" class="boc px-4 py-3">
-                <i class="bi bi-person-plus me-1"></i> Regisztráció
-            </a>
+    <!-- 2. TECHNOLÓGIAI MUTATÓK SÁV -->
+    <section id="proof">
+        <div class="container">
+            <div class="row text-center g-4">
+                <div class="col-6 col-md-3">
+                    <div class="pnum">Java 25</div>
+                    <div class="plbl">Spring Boot 3 Backend</div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="pnum">3 Tábla</div>
+                    <div class="plbl">Szoftver, Kategória, Telepítés</div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="pnum">RBAC</div>
+                    <div class="plbl">Látogató, User &amp; Admin jogok</div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="pnum">REST + CRUD</div>
+                    <div class="plbl">Teljes körű adatkezelés</div>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <div sec:authorize="isAuthenticated()" class="gc d-inline-block px-4 py-3 mt-2 afu">
-            <span style="color: var(--tx2);">Sikeresen bejelentkezve mint:</span>
-            <strong class="gt ms-1" sec:authentication="name"></strong>
+    <!-- 3. FŐBB FUNKCIÓK (KÁRTYÁK) -->
+    <section class="sp">
+        <div class="container">
+            <div class="text-center mb-5">
+                <div class="slbl">Funkciók és modulok</div>
+                <h2 class="stitle text-white">Minden egyetlen rendszerben</h2>
+                <p class="ssub mx-auto">
+                    Az alkalmazás lefedi a teljes szoftverleltár-kezelési folyamatot a nyilvános lekérdezéstől az adminisztrátori karbantartásig.
+                </p>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-4">
+                    <div class="gc p-4 h-100">
+                        <div class="ftico"><i class="bi bi-database-check"></i></div>
+                        <h4 class="fw-bold text-white mb-2">Relációs Adatbázis</h4>
+                        <p class="small mb-3" style="color: var(--tx2);">
+                            A szoftverek, kategóriák és telepítések összekapcsolt nyilvántartása tiszta táblázatos nézetben minden látogató számára.
+                        </p>
+                        <a th:href="@{/adatbazis}" class="ftag">Adatbázis megnyitása &rarr;</a>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="gc p-4 h-100">
+                        <div class="ftico"><i class="bi bi-bar-chart-steps"></i></div>
+                        <h4 class="fw-bold text-white mb-2">Interaktív Diagramok</h4>
+                        <p class="small mb-3" style="color: var(--tx2);">
+                            Vizuális áttekintés a szoftverállomány összetételéről és a telepítések megoszlásáról dinamikus grafikonokkal.
+                        </p>
+                        <a th:href="@{/diagram}" class="ftag">Diagramok megtekintése &rarr;</a>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="gc p-4 h-100">
+                        <div class="ftico"><i class="bi bi-code-slash"></i></div>
+                        <h4 class="fw-bold text-white mb-2">RESTful API</h4>
+                        <p class="small mb-3" style="color: var(--tx2);">
+                            Szabványos HTTP GET, POST, PUT és DELETE végpontok külső rendszerek integrációjához és JSON adatcseréhez.
+                        </p>
+                        <a th:href="@{/rest}" class="ftag">API dokumentáció &rarr;</a>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="gc p-4 h-100">
+                        <div class="ftico"><i class="bi bi-envelope-paper"></i></div>
+                        <h4 class="fw-bold text-white mb-2">Kapcsolat &amp; Üzenetek</h4>
+                        <p class="small mb-3" style="color: var(--tx2);">
+                            Validált kapcsolatfelvételi űrlap minden látogatónak, valamint beérkező üzenetnapló a regisztrált felhasználóknak.
+                        </p>
+                        <a th:href="@{/kapcsolat}" class="ftag">Üzenet küldése &rarr;</a>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="gc p-4 h-100">
+                        <div class="ftico"><i class="bi bi-shield-lock"></i></div>
+                        <h4 class="fw-bold text-white mb-2">Szerepkör-kezelés</h4>
+                        <p class="small mb-3" style="color: var(--tx2);">
+                            BCrypt jelszótitkosítással védett regisztráció és belépés, elkülönített Látogató, Regisztrált és Admin jogosultságokkal.
+                        </p>
+                        <span class="ftag">Spring Security</span>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="gc p-4 h-100">
+                        <div class="ftico"><i class="bi bi-sliders"></i></div>
+                        <h4 class="fw-bold text-white mb-2">Admin CRUD Felület</h4>
+                        <p class="small mb-3" style="color: var(--tx2);">
+                            Új rekordok felvitele, meglévő adatok szerkesztése és törlése közvetlenül a webes adminisztrációs felületről.
+                        </p>
+                        <span class="ftag">Admin jogosultság</span>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
+    <section class="sp" style="background: var(--bg2); border-top: 1px solid var(--bd); border-bottom: 1px solid var(--bd);">
+        <div class="container text-center">
+            <div class="slbl">Használat</div>
+            <h2 class="stitle text-white mb-5">Három egyszerű lépésben</h2>
+
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="hnum">1</div>
+                    <h5 class="fw-bold text-white">Böngészés látogatóként</h5>
+                    <p class="small mx-auto" style="color: var(--tx2); max-width: 300px;">
+                        Tekintsd meg a nyilvános szoftverleltárt, a diagramokat, a REST végpontokat, vagy küldj üzenetet a Kapcsolat oldalon.
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <div class="hnum">2</div>
+                    <h5 class="fw-bold text-white">Regisztráció és belépés</h5>
+                    <p class="small mx-auto" style="color: var(--tx2); max-width: 300px;">
+                        Hozz létre saját felhasználói fiókot, és érd el a beérkezett üzenetek időrendi listáját az Üzenetek menüpontban.
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <div class="hnum">3</div>
+                    <h5 class="fw-bold text-white">Adminisztráció (CRUD)</h5>
+                    <p class="small mx-auto" style="color: var(--tx2); max-width: 300px;">
+                        Adminisztrátorként kezeld a teljes adatbázist: vegyél fel új szoftvereket, módosítsd vagy töröld a rekordokat.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. CTA SZEKCIÓ -->
+    <section id="cta">
+        <div class="aur aur-a" style="top: -20%; left: 30%;"></div>
+        <div class="container position-relative" style="z-index: 1;">
+            <div class="slbl">Kezdés</div>
+            <h2 class="stitle text-white mb-3">Fedezd fel a Szoftverleltárt</h2>
+            <p class="ssub mx-auto mb-4">
+                Nézd meg az élő adatbázist vagy jelentkezz be a bővített funkciók eléréséhez.
+            </p>
+            <div class="d-flex flex-wrap justify-content-center gap-3">
+                <a th:href="@{/adatbazis}" class="bgrd px-4 py-3">Ugrás az Adatbázishoz</a>
+                <a th:href="@{/kapcsolat}" class="boc px-4 py-3">Kapcsolatfelvétel</a>
+            </div>
+        </div>
+    </section>
+
+</div>
 </body>
 </html>
