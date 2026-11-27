@@ -2,11 +2,133 @@
 <html lang="hu" xmlns:th="http://www.thymeleaf.org"
       th:replace="~{layout :: layout('Adatbázis - Szoftverleltár', ~{::section})}">
 <body>
-<section class="container flex-grow-1 py-5">
-    <div class="gc p-4 p-md-5 mt-4 afu">
-        <div class="hbadge"><span class="bdot"></span> Nyilvános adatbázis nézet</div>
-        <h1 class="stitle text-white">Szoftverleltár Adatbázis</h1>
-        <p class="ssub mb-0">Itt jelenik meg a szoftverek, kategóriák és telepítések összekapcsolt listája.</p>
+<section class="position-relative flex-grow-1 py-5" style="overflow: hidden;">
+    <div class="aur aur-a" style="top: -5%; left: 5%;"></div>
+    <div class="aur aur-b" style="bottom: 5%; right: 5%;"></div>
+
+    <div class="container position-relative pt-3" style="z-index: 1;">
+        <div class="gc p-4 p-md-5 mb-4 afu">
+            <div class="hbadge"><span class="bdot"></span> Relációs MySQL Adatbázis (3 tábla)</div>
+            <h1 class="stitle text-white">Szoftverleltár Adatbázis</h1>
+            <p class="ssub mb-4">
+                A <strong class="text-white">gep</strong>, <strong class="text-white">szoftver</strong> és
+                <strong class="text-white">telepites</strong> táblák összekapcsolt és táblánkénti adatai JPA Repository-n keresztül.
+            </p>
+
+            <div class="row g-3">
+                <div class="col-4">
+                    <div class="db-stat-card py-3">
+                        <div class="db-stat-lbl">Gépek száma</div>
+                        <div class="db-stat-val gt" th:text="${#lists.size(gepek)}">0</div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="db-stat-card py-3">
+                        <div class="db-stat-lbl">Szoftverek száma</div>
+                        <div class="db-stat-val gt" th:text="${#lists.size(szoftverek)}">0</div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="db-stat-card py-3">
+                        <div class="db-stat-lbl">Telepítések száma</div>
+                        <div class="db-stat-val gt" th:text="${#lists.size(telepitesek)}">0</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="gc p-4 mb-4 afu">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4 class="fw-bold text-white mb-0">
+                    <i class="bi bi-diagram-3 me-2" style="color: var(--pur);"></i>Összekapcsolt leltár (Telepítések + Gépek + Szoftverek)
+                </h4>
+                <span class="ftag mt-0">3 tábla JOIN</span>
+            </div>
+            <div class="table-responsive" style="max-height: 450px; overflow-y: auto;">
+                <table class="db-table">
+                    <thead>
+                    <tr>
+                        <th>Gép helye</th>
+                        <th>Típus</th>
+                        <th>IP-cím</th>
+                        <th>Szoftver neve</th>
+                        <th>Kategória</th>
+                        <th>Verzió</th>
+                        <th>Telepítés dátuma</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="t : ${telepitesek}">
+                        <td class="text-white fw-medium" th:text="${t.gep != null ? t.gep.hely : '-'}">Terem</td>
+                        <td th:text="${t.gep != null ? t.gep.tipus : '-'}">Asztali</td>
+                        <td th:text="${t.gep != null ? t.gep.ipcim : '-'}">192.168.1.1</td>
+                        <td class="fw-semibold text-white" th:text="${t.szoftver != null ? t.szoftver.nev : '-'}">Szoftver</td>
+                        <td>
+                            <span class="ftag mt-0" th:text="${t.szoftver != null ? t.szoftver.kategoria : '-'}">Kategória</span>
+                        </td>
+                        <td th:text="${t.verzio != null ? t.verzio : '-'}">1.0</td>
+                        <td th:text="${t.datum != null ? t.datum : '-'}">2026.01.01</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="row g-4 afu">
+            <div class="col-lg-6">
+                <div class="gc p-4 h-100">
+                    <h5 class="fw-bold text-white mb-3">
+                        <i class="bi bi-pc-display me-2" style="color: var(--blu);"></i>Gépek tábla (gep)
+                    </h5>
+                    <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
+                        <table class="db-table">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Hely</th>
+                                <th>Típus</th>
+                                <th>IP-cím</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="g : ${gepek}">
+                                <td th:text="${g.id}">1</td>
+                                <td class="text-white fw-medium" th:text="${g.hely}">Hely</td>
+                                <td th:text="${g.tipus}">Típus</td>
+                                <td th:text="${g.ipcim}">IP</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="gc p-4 h-100">
+                    <h5 class="fw-bold text-white mb-3">
+                        <i class="bi bi-hdd-stack me-2" style="color: var(--pur);"></i>Szoftverek tábla (szoftver)
+                    </h5>
+                    <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
+                        <table class="db-table">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Szoftver neve</th>
+                                <th>Kategória</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="sz : ${szoftverek}">
+                                <td th:text="${sz.id}">1</td>
+                                <td class="text-white fw-medium" th:text="${sz.nev}">Név</td>
+                                <td th:text="${sz.kategoria}">Kategória</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
 </body>
