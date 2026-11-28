@@ -64,7 +64,9 @@ public class PageController {
     }
 
     @GetMapping("/diagram")
-    public String diagram() {
+    public String diagram(Model model) {
+        model.addAttribute("kategoriaStatisztika",
+                telepitesRepository.findTelepitesekKategoriankent());
         return "diagram";
     }
 

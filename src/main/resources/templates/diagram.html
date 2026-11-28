@@ -4,9 +4,76 @@
 <body>
 <section class="container flex-grow-1 py-5">
     <div class="gc p-4 p-md-5 mt-4 afu">
-        <div class="hbadge"><span class="bdot"></span> Vizualizáció</div>
-        <h1 class="stitle text-white">Statisztikai Diagramok</h1>
-        <p class="ssub mb-0">A szoftverleltár adatainak grafikus megjelenítése (Chart.js).</p>
+        <h1 class="stitle text-white mb-4">Telepítések szoftverkategóriánként</h1>
+
+        <p class="ssub" th:if="${#lists.isEmpty(kategoriaStatisztika)}">
+            Még nincs megjeleníthető telepítés.
+        </p>
+
+        <div th:unless="${#lists.isEmpty(kategoriaStatisztika)}">
+            <div class="position-relative">
+                <canvas id="telepites-diagram" role="img"
+                        aria-label="Telepítések száma szoftverkategóriánként"></canvas>
+            </div>
+
+            <details class="mt-4">
+                <summary>Adatok táblázatban</summary>
+                <div class="table-responsive mt-2">
+                    <table id="telepites-adatok" class="db-table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Kategória</th>
+                            <th scope="col">Telepítések száma</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="adat : ${kategoriaStatisztika}">
+                            <td th:text="${adat.kategoria}"></td>
+                            <td th:text="${adat.darab}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </details>
+
+            <script th:src="@{/js/chart.umd.min.js}"></script>
+            <script>
+                const diagram = document.getElementById('telepites-diagram');
+                const sorok = Array.from(document.querySelectorAll('#telepites-adatok tbody tr'));
+
+                diagram.parentElement.style.height = Math.max(260, sorok.length * 32 + 45) + 'px';
+
+                new Chart(diagram, {
+                    type: 'bar',
+                    data: {
+                        labels: sorok.map(sor => sor.cells[0].textContent),
+                        datasets: [{
+                            label: 'Telepítések száma',
+                            data: sorok.map(sor => Number(sor.cells[1].textContent)),
+                            backgroundColor: '#8b5cf6',
+                            borderRadius: 4
+                        }]
+                    },
+                    options: {
+                        indexAxis: 'y',
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            x: {
+                                beginAtZero: true,
+                                ticks: { precision: 0, color: '#e2e8f0' },
+                                grid: { color: 'rgba(226, 232, 240, 0.12)' }
+                            },
+                            y: {
+                                ticks: { color: '#e2e8f0' },
+                                grid: { display: false }
+                            }
+                        }
+                    }
+                });
+            </script>
+        </div>
     </div>
 </section>
 </body>
