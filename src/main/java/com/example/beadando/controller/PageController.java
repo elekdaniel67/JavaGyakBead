@@ -74,7 +74,8 @@ public class PageController {
     }
 
     @GetMapping("/uzenetek")
-    public String uzenetek() {
+    public String uzenetek(Model model) {
+        model.addAttribute("uzenetek", uzenetRepository.findAllByOrderByKuldveDescIdDesc());
         return "uzenetek";
     }
 
