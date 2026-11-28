@@ -4,9 +4,59 @@
 <body>
 <section class="container flex-grow-1 py-5">
     <div class="gc p-4 p-md-5 mt-4 afu">
-        <div class="hbadge"><span class="bdot"></span> RESTful Webszolgáltatás</div>
-        <h1 class="stitle text-white">REST API Végpontok</h1>
-        <p class="ssub mb-0">JSON alapú lekérdezési, létrehozási, módosítási és törlési végpontok dokumentációja és tesztelése.</p>
+        <h1 class="stitle text-white mb-4">Szoftverleltár REST API</h1>
+
+        <div class="table-responsive">
+            <table class="db-table">
+                <thead>
+                <tr>
+                    <th scope="col">Metódus</th>
+                    <th scope="col">Útvonal</th>
+                    <th scope="col">Művelet</th>
+                    <th scope="col">Hozzáférés</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>GET</td>
+                    <td><a th:href="@{/api/szoftverek}"><code>/api/szoftverek</code></a></td>
+                    <td>Szoftverek listázása</td>
+                    <td>Nyilvános</td>
+                </tr>
+                <tr>
+                    <td>GET</td>
+                    <td><code>/api/szoftverek/{id}</code></td>
+                    <td>Egy szoftver lekérése</td>
+                    <td>Nyilvános</td>
+                </tr>
+                <tr>
+                    <td>POST</td>
+                    <td><code>/api/szoftverek</code></td>
+                    <td>Új szoftver felvétele</td>
+                    <td>Admin</td>
+                </tr>
+                <tr>
+                    <td>PUT</td>
+                    <td><code>/api/szoftverek/{id}</code></td>
+                    <td>Szoftver módosítása</td>
+                    <td>Admin</td>
+                </tr>
+                <tr>
+                    <td>DELETE</td>
+                    <td><code>/api/szoftverek/{id}</code></td>
+                    <td>Szoftver törlése</td>
+                    <td>Admin</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <p class="ssub mt-4">A POST, PUT és DELETE kérésekhez adminfiók és Basic Auth szükséges.
+            A POST és PUT kérés törzse JSON.</p>
+        <pre class="text-white mb-0"><code>{
+  "nev": "Próba szoftver",
+  "kategoria": "Teszt"
+}</code></pre>
     </div>
 </section>
 </body>
