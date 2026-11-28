@@ -81,11 +81,6 @@ public class PageController {
         return "uzenetek";
     }
 
-    @GetMapping("/crud")
-    public String crud() {
-        return "crud";
-    }
-
     public record KapcsolatUrlap(
             @NotBlank(message = "Add meg a neved.")
             @Size(max = 100, message = "A név legfeljebb 100 karakter lehet.")

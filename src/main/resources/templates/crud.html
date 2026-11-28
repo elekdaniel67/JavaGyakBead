@@ -1,12 +1,66 @@
 <!DOCTYPE html>
-<html lang="hu" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      th:replace="~{layout :: layout('CRUD Kezelés - Szoftverleltár', ~{::section})}">
+<html lang="hu" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout('Szoftverek kezelése - Szoftverleltár', ~{::section})}">
 <body>
 <section class="container flex-grow-1 py-5">
-    <div class="gc p-4 p-md-5 mt-4 afu" style="border-color: rgba(139, 92, 246, 0.35);">
-        <div class="hbadge"><span class="bdot"></span> Adminisztrátori felület</div>
-        <h1 class="stitle text-white">Adatbázis CRUD Kezelés</h1>
-        <p class="ssub mb-0">Rekordok listázása, új rekord felvitele, meglévők módosítása és törlése.</p>
+    <div class="gc p-4 p-md-5 mt-4 afu">
+        <h1 class="stitle text-white mb-4">Szoftverek kezelése</h1>
+
+        <p class="alert alert-success" role="status"
+           th:if="${crudUzenet}" th:text="${crudUzenet}"></p>
+        <p class="alert alert-danger" role="alert"
+           th:if="${crudHiba}" th:text="${crudHiba}"></p>
+
+        <h2 class="h4 text-white mb-3"
+            th:text="${szerkesztettId == null ? 'Új szoftver' : 'Szoftver módosítása'}"></h2>
+
+        <form method="post" class="mb-5" th:object="${szoftverUrlap}"
+              th:action="${szerkesztettId == null} ? @{/crud} : @{/crud/{id}(id=${szerkesztettId})}">
+            <label for="nev" class="olbl">Szoftver neve</label>
+            <input type="text" id="nev" th:field="*{nev}" class="oinp" maxlength="255" required>
+            <p class="err-msg d-block" th:errors="*{nev}"></p>
+
+            <label for="kategoria" class="olbl">Kategória (opcionális)</label>
+            <input type="text" id="kategoria" th:field="*{kategoria}" class="oinp" maxlength="255">
+            <p class="err-msg d-block" th:errors="*{kategoria}"></p>
+
+            <button type="submit" class="bgrd px-4 py-2">Mentés</button>
+            <a class="boc px-3 py-2 ms-2 text-decoration-none" th:if="${szerkesztettId != null}"
+               th:href="@{/crud}">Mégse</a>
+        </form>
+
+        <div class="table-responsive">
+            <table class="db-table">
+                <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Név</th>
+                    <th scope="col">Kategória</th>
+                    <th scope="col">Műveletek</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${#lists.isEmpty(szoftverek)}">
+                    <td colspan="4">Még nincs szoftver a nyilvántartásban.</td>
+                </tr>
+                <tr th:each="szoftver : ${szoftverek}">
+                    <td th:text="${szoftver.id}"></td>
+                    <td th:text="${szoftver.nev}"></td>
+                    <td th:text="${szoftver.kategoria ?: '–'}"></td>
+                    <td>
+                        <div class="d-flex flex-wrap gap-2">
+                            <a class="boc px-3 py-1 text-decoration-none"
+                               th:href="@{/crud/{id}/szerkesztes(id=${szoftver.id})}">Módosítás</a>
+                            <form method="post" th:action="@{/crud/{id}/torles(id=${szoftver.id})}"
+                                  onsubmit="return confirm('Biztosan törlöd ezt a szoftvert?')">
+                                <button type="submit" class="btn btn-outline-danger btn-sm">Törlés</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </section>
 </body>
